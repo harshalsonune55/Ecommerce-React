@@ -1,8 +1,9 @@
 import "./cartComp.css";
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
 import Modal from "../model";
 import { useState } from "react";
 import Payment from "../payment/payment";
+import { removeFromCart } from "../../features/store/storeSlice"; 
 
 export default function CartComp() {
     const cartItems = useSelector((state) => state.cart.cartItems);
@@ -11,6 +12,12 @@ export default function CartComp() {
         return acc + price;
       }, 0);
       const [isOpen, setIsOpen] = useState(false);
+      const dispatch = useDispatch();
+
+      const handleDelete = (id) => {
+        dispatch(removeFromCart(id));
+    };
+    
   return (
     <>
       <h3>Your Shopping Cart</h3>
@@ -38,6 +45,14 @@ export default function CartComp() {
                     <span>{item.title}</span>
                   </td>
                   <td>₹{Math.floor(item.price * 86.75)}</td>
+                  <td>
+                    <button
+                      className="delete-btn"
+                      onClick={() => handleDelete(item.id)}
+                    >
+                    Delete
+                    </button>
+                    </td>
                 </tr>
               ))}
             </tbody>
