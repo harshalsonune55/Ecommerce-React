@@ -1,0 +1,45 @@
+import { createSlice, nanoid, createAsyncThunk } from '@reduxjs/toolkit';
+
+const URL = "https://fakestoreapi.com/products";
+export const fetchData=createAsyncThunk('fetchData',async ()=>{
+const response =await fetch(URL);
+return response.json();
+});
+
+const cartSlice = createSlice({
+    name: "cart",
+    initialState: {
+      cartItems: []
+    },
+    reducers: {
+      addToCart: (state, action) => {
+        state.cartItems.push(action.payload); 
+      }
+    }
+  });
+
+  const data=createSlice({
+    name:"data",
+    initialState:{
+        islosding:false,
+        data:null,
+        isError:false,
+    },
+    extraReducers:(builder)=>{
+        builder.addCase(fetchData.pending,(state,action)=>{
+            state.islosding=true;
+        });
+        builder.addCase(fetchData.fulfilled,(state,action)=>{
+            state.islosding=false;
+            state.data=action.payload;
+        });
+        builder.addCase(fetchData.rejected,(state,action)=>{
+            console.log("error",action.payload);
+            state.isError=true;
+        });
+    }
+});
+
+export const datareducer = data.reducer;
+export const { addToCart } = cartSlice.actions;
+export default cartSlice.reducer;
