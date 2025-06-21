@@ -1,0 +1,61 @@
+
+
+  @keyframes gradientMove {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  
+  .signup-container {
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(-45deg, #ff6b6b, #6b6bff, #6bff95, #ffb86b);
+    background-size: 400% 400%;
+    animation: gradientMove 1s ease infinite;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .signup-form {
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+  }
+  
+  .signup-form input,
+  .signup-form button {
+    margin-bottom: 12px;
+    padding: 10px;
+    font-size: 16px;
+  }
+  
+  .signup-form button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  
+  .signup-form button:hover {
+    background-color: #0056b3;
+  }
+  
+  .message {
+    text-align: center;
+    color: red;
+  }
+  
