@@ -50,8 +50,10 @@ app.post("/signup",async(req,res)=>{
             username:username,});
       req.session.name=username;
       let regestiredUser= await Userp.register(newUser,password);
-      res.status(200).json({ message: "Signup successful" });
-    
+      req.login(regestiredUser, function(err) {
+        if (err) { return next(err); }
+       else{return res.status(200).json({ message: "Signup successful"  , user:req.user}); } 
+      });
      }catch(e){
       console.log(e)
       return res.status(400).json({ message: "Some error hits" });

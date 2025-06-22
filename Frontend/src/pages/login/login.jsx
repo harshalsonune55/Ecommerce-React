@@ -7,6 +7,8 @@ import { loginUser } from "../../features/store/storeSlice";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { Link, NavLink } from 'react-router-dom';
+import { toast } from "react-toastify";
+
 export default function Login(){
 
     const {
@@ -21,6 +23,7 @@ export default function Login(){
 
 
   const onSubmit = (data) => {
+    toast.success("login in successfully!");
     dispatch(loginUser(data));
   };
 
@@ -39,8 +42,8 @@ export default function Login(){
     <form onSubmit={handleSubmit(onSubmit)} className="login-form">
       <h2>Login</h2>
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      {loading && <p style={{ color: "green" }}>Logging in...</p>}
+      {error && <p style={{ color: "red" }}>{toast.error(`${error}`)}</p>}
+      {loading && <p style={{ color: "green" }}>Logging in ...</p>}
 
       <input {...register("username", { required: true })} placeholder="Username" />
       {errors.username && <span>Username is required</span>}
@@ -49,7 +52,7 @@ export default function Login(){
       {errors.password && <span>Password is required</span>}
 
       <button type="submit" disabled={loading}>Login</button>
-      <p>Didn't have a account? make you one <NavLink to="/signup">signup</NavLink></p>
+      <p>Didn't have a account? make one <NavLink to="/signup">signup</NavLink></p>
     </form>
   </div>
 <Footer/>

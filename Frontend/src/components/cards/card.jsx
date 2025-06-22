@@ -6,18 +6,25 @@ import { addToCart } from '../../features/store/storeSlice';
 import Modal from '../model';
 import Payment from '../payment/payment';
 import Detail from '../order_Detail/order_detail';
+import { useNavigate } from "react-router-dom"; 
+import { toast } from "react-toastify";
+
+
 
 
 export default function Cards() {
 
+
+  const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
   const { data, isloading, isError } = useSelector((state) => state.data);
   const [selectedProduct, setSelectedProduct] = useState(null);
-
+  const navigate = useNavigate(); 
   const [isOpen, setIsOpen] = useState({ payment: false, order_D: false });
   function cart(item) {
     dispatch(addToCart(item));
-    alert(`${item.title} added to cart!`);
+    toast.success(`${item.title} added to cart!`);
+
   }
 
   function cardClick(item) {
@@ -41,6 +48,11 @@ export default function Cards() {
             <div className="buttons">
               <button className="buy" onClick={(e) => {
                 e.stopPropagation();
+                if (!user) {
+                  toast.error("Please login to add items to cart.");
+                  navigate("/login");
+                  return;
+                }
                 setIsOpen((prev) => ({ ...prev, payment: true }));
               }}>Buy now</button>
 

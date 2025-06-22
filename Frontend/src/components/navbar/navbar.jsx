@@ -2,12 +2,14 @@ import "./navbar.css";
 import { Link, NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import { logoutUser } from "../../features/store/storeSlice";
+import { toast } from "react-toastify";
 export default function Navber({purchase}){
 
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   const handleLogout = () => {
+    toast.success("logout successfully");
     dispatch(logoutUser());
   };
 

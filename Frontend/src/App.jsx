@@ -9,6 +9,8 @@ import Store from "./app/store.js";
 import Signup from './pages/signup/signup.jsx';
 import Login from './pages/login/login.jsx';
 import Dashboard from './pages/dashboard/dashboard.jsx';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 
 function App() {
@@ -17,6 +19,7 @@ function App() {
   return (
     <>
     <Provider store={Store}>
+    <ToastContainer position="top-center" autoClose={3000} />
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />

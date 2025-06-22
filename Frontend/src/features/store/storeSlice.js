@@ -60,38 +60,7 @@ const cartSlice = createSlice({
     }
   });
   
-  // const authSlice = createSlice({
-  //   name: "auth",
-  //   initialState: {
-  //     user: null,
-  //     loading: false,
-  //     error: null,
-  //     success: false,
-  //   },
-  //   reducers: {
-  //     resetAuthState: (state) => {
-  //       state.loading = false;
-  //       state.error = null;
-  //       state.success = false;
-  //     },
-  //   },
-  //   extraReducers: (builder) => {
-  //     builder
-  //       .addCase(signupUser.pending, (state) => {
-  //         state.loading = true;
-  //         state.error = null;
-  //       })
-  //       .addCase(signupUser.fulfilled, (state, action) => {
-  //         state.loading = false;
-  //         state.success = true;
-  //         state.user = action.payload;
-  //       })
-  //       .addCase(signupUser.rejected, (state, action) => {
-  //         state.loading = false;
-  //         state.error = action.payload || "Signup failed";
-  //       })
-  //   },
-  // });
+
 
   const authSlice = createSlice({
     name: "auth",
@@ -120,7 +89,7 @@ const cartSlice = createSlice({
         .addCase(signupUser.fulfilled, (state, action) => {
           state.loading = false;
           state.success = true;
-          state.user = action.payload;
+          state.user = action.payload.user;
         })
         .addCase(signupUser.rejected, (state, action) => {
           state.loading = false;
@@ -140,36 +109,7 @@ const cartSlice = createSlice({
     },
   });
 
-  // const authSliceLog = createSlice({
-  //   name: "authLog",
-  //   initialState: {
-  //     user: null,
-  //     loading: false,
-  //     error: null,
-  //   },
-  //   reducers: {
-  //     logoutUser: (state) => {
-  //       state.user = null;
-  //     },
-  //   },
-  //   extraReducers: (builder) => {
-  //     builder
-  //       .addCase(loginUser.pending, (state) => {
-  //         state.loading = true;
-  //       })
-  //       .addCase(loginUser.fulfilled, (state, action) => {
-  //         state.loading = false;
-  //         state.user = action.payload;
-  //       })
-  //       .addCase(loginUser.rejected, (state, action) => {
-  //         state.loading = false;
-  //         state.error = action.payload;
-  //       })
-  //       // .addCase(fetchUser.fulfilled, (state, action) => {
-  //       //   state.user = action.payload;
-  //       // });
-  //   },
-  // });
+
 
 
 
