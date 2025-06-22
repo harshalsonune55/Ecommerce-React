@@ -8,6 +8,7 @@ import {Provider} from "react-redux";
 import Store from "./app/store.js";
 import Signup from './pages/signup/signup.jsx';
 import Login from './pages/login/login.jsx';
+import Dashboard from './pages/dashboard/dashboard.jsx';
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
         <Route path="/cart" element={<Cart />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </Router>
     </Provider>

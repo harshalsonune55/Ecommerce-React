@@ -1,0 +1,48 @@
+/* src/pages/dashboard.css */
+
+.dashboard-container {
+    padding: 2rem;
+    max-width: 900px;
+    margin: auto;
+  }
+  
+  h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 2rem;
+  }
+  
+  .user-details, .order-history {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    margin-bottom: 2rem;
+  }
+  
+  .user-details p {
+    margin: 0.5rem 0;
+    font-size: 1rem;
+  }
+  
+  .order-history table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .order-history th, .order-history td {
+    text-align: left;
+    padding: 0.75rem;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .order-history th {
+    background: #f5f5f5;
+  }
+  .dashboard-logo {
+    font-size: 5rem;
+    text-align: center;
+    margin-bottom: 1rem;
+    color: #007bff; 
+  }
+  

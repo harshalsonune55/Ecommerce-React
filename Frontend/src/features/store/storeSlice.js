@@ -34,19 +34,158 @@ const cartSlice = createSlice({
     }
   });
 
+  export const signupUser = createAsyncThunk(
+    "auth/signupUser",
+    async (formData, thunkAPI) => {
+      try {
+        const response = await fetch("http://localhost:8080/signup" ,{method:"Post",  headers: {
+          "Content-Type": "application/json", 
+        }, body:JSON.stringify(formData)});
+        const data = await response.json();
+        return data;
+      } catch (error) {
+        return thunkAPI.rejectWithValue(error.response?.data || "Signup failed");
+      }
+    }
+  );
+  export const loginUser = createAsyncThunk("auth/loginUser", async (formData, thunkAPI) => {
+    try {
+      const response = await fetch("http://localhost:8080/login" ,{method:"Post",  headers: {
+        "Content-Type": "application/json", 
+      }, body:JSON.stringify(formData)});
+      const data = await response.json();
+      return data;
+    } catch (err) {
+      return thunkAPI.rejectWithValue("Invalid credentials");
+    }
+  });
+  
+  // const authSlice = createSlice({
+  //   name: "auth",
+  //   initialState: {
+  //     user: null,
+  //     loading: false,
+  //     error: null,
+  //     success: false,
+  //   },
+  //   reducers: {
+  //     resetAuthState: (state) => {
+  //       state.loading = false;
+  //       state.error = null;
+  //       state.success = false;
+  //     },
+  //   },
+  //   extraReducers: (builder) => {
+  //     builder
+  //       .addCase(signupUser.pending, (state) => {
+  //         state.loading = true;
+  //         state.error = null;
+  //       })
+  //       .addCase(signupUser.fulfilled, (state, action) => {
+  //         state.loading = false;
+  //         state.success = true;
+  //         state.user = action.payload;
+  //       })
+  //       .addCase(signupUser.rejected, (state, action) => {
+  //         state.loading = false;
+  //         state.error = action.payload || "Signup failed";
+  //       })
+  //   },
+  // });
+
+  const authSlice = createSlice({
+    name: "auth",
+    initialState: {
+      user: null,
+      loading: false,
+      error: null,
+      success: false,
+    },
+    reducers: {
+      resetAuthState: (state) => {
+        state.loading = false;
+        state.error = null;
+        state.success = false;
+      },
+      logoutUser: (state) => {
+        state.user = null;
+      }
+    },
+    extraReducers: (builder) => {
+      builder
+        .addCase(signupUser.pending, (state) => {
+          state.loading = true;
+          state.error = null;
+        })
+        .addCase(signupUser.fulfilled, (state, action) => {
+          state.loading = false;
+          state.success = true;
+          state.user = action.payload;
+        })
+        .addCase(signupUser.rejected, (state, action) => {
+          state.loading = false;
+          state.error = action.payload;
+        })
+        .addCase(loginUser.pending, (state) => {
+          state.loading = true;
+        })
+        .addCase(loginUser.fulfilled, (state, action) => {
+          state.loading = false;
+          state.user = action.payload;
+        })
+        .addCase(loginUser.rejected, (state, action) => {
+          state.loading = false;
+          state.error = action.payload;
+        });
+    },
+  });
+
+  // const authSliceLog = createSlice({
+  //   name: "authLog",
+  //   initialState: {
+  //     user: null,
+  //     loading: false,
+  //     error: null,
+  //   },
+  //   reducers: {
+  //     logoutUser: (state) => {
+  //       state.user = null;
+  //     },
+  //   },
+  //   extraReducers: (builder) => {
+  //     builder
+  //       .addCase(loginUser.pending, (state) => {
+  //         state.loading = true;
+  //       })
+  //       .addCase(loginUser.fulfilled, (state, action) => {
+  //         state.loading = false;
+  //         state.user = action.payload;
+  //       })
+  //       .addCase(loginUser.rejected, (state, action) => {
+  //         state.loading = false;
+  //         state.error = action.payload;
+  //       })
+  //       // .addCase(fetchUser.fulfilled, (state, action) => {
+  //       //   state.user = action.payload;
+  //       // });
+  //   },
+  // });
+
+
+
   const data=createSlice({
     name:"data",
     initialState:{
-        islosding:false,
+        isloding:false,
         data:null,
         isError:false,
     },
     extraReducers:(builder)=>{
         builder.addCase(fetchData.pending,(state,action)=>{
-            state.islosding=true;
+            state.isloding=true;
         });
         builder.addCase(fetchData.fulfilled,(state,action)=>{
-            state.islosding=false;
+            state.isloding=false;
             state.data=action.payload;
         });
         builder.addCase(fetchData.rejected,(state,action)=>{
@@ -56,6 +195,9 @@ const cartSlice = createSlice({
     }
 });
 
-export const datareducer = data.reducer;
-export const { addToCart,removeFromCart,viewitem } = cartSlice.actions;
-export default cartSlice.reducer;
+export const cartReducer = cartSlice.reducer;
+export const authReducer = authSlice.reducer;
+export const dataReducer = data.reducer;
+export const { logoutUser } = authSlice.actions;
+export const { addToCart, removeFromCart, viewitem } = cartSlice.actions;
+export const { resetAuthState } = authSlice.actions;

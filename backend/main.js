@@ -43,29 +43,36 @@ app.get("/",(req,res)=>{
 
 
 app.post("/signup",async(req,res)=>{
-    let{username,Email,Password}=req.body;
+    let{username,email,password}=req.body;
     try{
         let newUser=new Userp({
-            email:Email,
+            email:email,
             username:username,});
       req.session.name=username;
-      let regestiredUser= await Userp.register(newUser,Password);
-      res.send("successfully login",regestiredUser);
-    // req.login(regestiredUser, function(err) {
-    //     if (err) { return next(err); }
-    //     return res.send("success");
-    //   });
-      
-    //   }else{
-    //     return res.send("back");
-    //   }
+      let regestiredUser= await Userp.register(newUser,password);
+      res.status(200).json({ message: "Signup successful" });
+    
      }catch(e){
       console.log(e)
-      return res.send("some error ")
+      return res.status(400).json({ message: "Some error hits" });
     }
+
 });
 
+app.post("/login", passport.authenticate("local"), (req, res) => {
+    res.json(req.user );
+  });
 
+  app.get("/user", (req, res) => {
+    res.json({ user: req.user || null });
+  });
+
+
+  app.get("/logout", (req, res) => {
+    req.logout(() => {
+      res.json({ message: "Logged out" });
+    });
+  });
 
 app.listen(port,()=>{
 console.log(`listening on ${port} port successully`);

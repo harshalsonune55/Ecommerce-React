@@ -11,7 +11,7 @@ import Detail from '../order_Detail/order_detail';
 export default function Cards() {
 
   const dispatch = useDispatch();
-  const { data, isLoading, isError } = useSelector((state) => state.data);
+  const { data, isloading, isError } = useSelector((state) => state.data);
   const [selectedProduct, setSelectedProduct] = useState(null);
 
   const [isOpen, setIsOpen] = useState({ payment: false, order_D: false });

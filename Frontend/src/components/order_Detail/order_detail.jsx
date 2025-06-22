@@ -1,6 +1,18 @@
 import"./order_detail.css";
+import { useSelector, useDispatch } from "react-redux";
+import { addToCart } from '../../features/store/storeSlice';
 export default function Detail({product}){
     if(!product) return null;
+
+
+    const dispatch = useDispatch();
+
+    function cart(item) {
+      dispatch(addToCart(item));
+      alert(`${item.title} added to cart!`);
+    }
+
+
     return(<>
 <div className="item-detail">
   <div className="image-section">
@@ -11,7 +23,10 @@ export default function Detail({product}){
     <p className="description">{product.description}</p>
     <p className="price">₹{Math.floor(product.price * 86.75)}</p>
     <div className="button">
-    <button class="add-to-cart-btn buy ">Add to Cart</button>
+    <button class="add-to-cart-btn buy " onClick={(e) => {
+                e.stopPropagation();
+                cart(product);
+              }}>Add to Cart</button>
     <button class="buyp buy">buy now</button>
     </div>
 
