@@ -11,7 +11,8 @@ import Login from './pages/login/login.jsx';
 import Dashboard from './pages/dashboard/dashboard.jsx';
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import Success from './pages/success/Success.jsx';
+import Cancle from './pages/cancle/cancle.jsx';
 
 function App() {
 
@@ -29,6 +30,8 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/success" element={<Success />} />
+        <Route path="/cancel" element={<Cancle />} />
       </Routes>
     </Router>
     </Provider>

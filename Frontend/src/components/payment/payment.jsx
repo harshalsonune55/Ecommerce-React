@@ -1,88 +1,49 @@
 import "./payment.css";
 import { useState } from "react";
+import { loadStripe } from "@stripe/stripe-js";
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
+
+const stripePromise = loadStripe("pk_test_51Rd979QDamHYr4F917Jia60HQrFkl701EBPribhDUHNFnjzVh4YPNHEvKVhiKhjj9nG9GLquPXX7CIDW2IAhciHf00h3ETvzTI");
 
 export default function Payment() {
-  const [formData, setFormData] = useState({
-    name: "",
-    cardNumber: "",
-    expiry: "",
-    cvv: ""
-  });
+  const [loading, setLoading] = useState(false);
+  const cartItems = useSelector((state) => state.cart.cartItems);
 
-  const [submitted, setSubmitted] = useState(false);
+  const handleCheckout = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch("http://localhost:8080/create-checkout-session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ cartItems }),
+      });
 
-  function handleChange(e) {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+      const data = await res.json();
+
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        toast.error("Failed to initiate Stripe checkout");
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error("Checkout error:", error);
+      toast.error("Something went wrong.");
+      setLoading(false);
+    }
   }
+  return (
+    <div className="payment-wrapper">
+      <button className="ruk" onClick={handleCheckout} disabled={loading}>
+        {loading ? "Redirecting..." : "Pay with Stripe"}
+      </button>
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    setSubmitted(true);
-  }
-
-  return (<>
-<h1>Please make the payment!</h1>
-    <div className="payment-container">
-      <h2>Payment Details</h2>
-
-      {submitted ? (
-        <div className="success-message">
-          ✅ Payment successful! Thank you for shopping.
+      {loading && (
+        <div className="spinner-overlay">
+          <div className="spinner"></div>
         </div>
-      ) : (
-        <form onSubmit={handleSubmit} className="payment-form">
-          <label>
-            Name on Card
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-            />
-          </label>
-
-          <label>
-            Card Number
-            <input
-              type="text"
-              name="cardNumber"
-              value={formData.cardNumber}
-              onChange={handleChange}
-              maxLength="16"
-              required
-            />
-          </label>
-
-          <div className="payment-row">
-            <label>
-              Expiry Date
-              <input
-                type="text"
-                name="expiry"
-                placeholder="MM/YY"
-                value={formData.expiry}
-                onChange={handleChange}
-                required
-              />
-            </label>
-
-            <label>
-              CVV
-              <input
-                type="password"
-                name="cvv"
-                maxLength="3"
-                value={formData.cvv}
-                onChange={handleChange}
-                required
-              />
-            </label>
-          </div>
-
-          <button type="submit">Pay Now</button>
-        </form>
       )}
     </div>
-    </>);
+  );
 }

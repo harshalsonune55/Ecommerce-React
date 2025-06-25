@@ -1,3 +1,4 @@
+require('dotenv').config();
 const mongoose=require("mongoose");
 
 main()
@@ -7,7 +8,7 @@ main()
 .catch(err => console.log(err));
 
 async function main() {
-  await mongoose.connect('mongodb://127.0.0.1:27017/React-ecom');
+  await mongoose.connect(process.env.MONGO_URL);
 }
 
 

@@ -48,6 +48,7 @@ export default function Cards() {
             <div className="buttons">
               <button className="buy" onClick={(e) => {
                 e.stopPropagation();
+                cart(item);
                 if (!user) {
                   toast.error("Please login to add items to cart.");
                   navigate("/login");

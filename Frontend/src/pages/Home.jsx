@@ -11,6 +11,9 @@ export default function Home() {
     useEffect(() => {
         setpurchase(cartItems.length);
       }, [cartItems]);
+
+
+
     return(
         <>
         <Navber purchase={purchase}/>
