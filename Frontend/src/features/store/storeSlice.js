@@ -1,6 +1,6 @@
 import { createSlice, nanoid, createAsyncThunk } from '@reduxjs/toolkit';
 
-const URL = "https://api.escuelajs.co/api/v1/products";
+const URL = "https://fakestoreapi.com/products";
 export const fetchData=createAsyncThunk('fetchData',async ()=>{
 const response =await fetch(URL);
 return response.json();
@@ -50,9 +50,15 @@ const cartSlice = createSlice({
   );
   export const loginUser = createAsyncThunk("auth/loginUser", async (formData, thunkAPI) => {
     try {
-      const response = await fetch("http://localhost:8080/login" ,{method:"Post",  headers: {
-        "Content-Type": "application/json", 
-      }, body:JSON.stringify(formData)});
+      const response = await fetch("http://localhost:8080/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      if (!response.ok) {
+        const error = await response.json();
+        return thunkAPI.rejectWithValue(error.message || "Login failed");
+      }
       const data = await response.json();
       return data;
     } catch (err) {

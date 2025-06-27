@@ -40,7 +40,7 @@ export default function Cards() {
     <div className="card-container" >
       {data?.map((item) => (
         <div className="card" key={item.id} onClick={() => { setIsOpen((prev) => ({ ...prev, order_D: true })), cardClick(item) }}>
-          <img src={item.images?.[1] || item.images?.[0] || 'fallback.jpg'} alt={item.title} />
+          <img src={item.image|| 'fallback.jpg'} alt={item.title} />
           <div className="card-content">
             <h3 id='cardTitle'>{item.title}</h3>
             <p className='cardDescription'>{item.description}</p>
